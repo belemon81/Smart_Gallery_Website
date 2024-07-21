@@ -7,15 +7,23 @@ framework:
     # Enables session support. Note that the session will ONLY be started if you read or write from it.
     # Remove or comment this section to explicitly disable session support.
     session:
-        handler_id: null
+        handler_id: 'session.handler.native_file'
+        save_path: '%kernel.project_dir%/var/sessions/%kernel.environment%' 
         cookie_secure: auto
         cookie_samesite: lax
         storage_factory_id: session.storage.factory.native
+        cookie_lifetime: 3600
+        gc_probability: 5
+        gc_maxlifetime: 1440
+        gc_divisor: 100
 
     #esi: true
     #fragments: true
     php_errors:
         log: true
+
+    form:
+        legacy_error_messages: false
 
 when@test:
     framework:

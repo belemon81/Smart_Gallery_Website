@@ -4,15 +4,26 @@ security:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
-        users_in_memory: { memory: null }
+        # used to reload user from session & other features (e.g. switch_user)
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: username
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             lazy: true
-            provider: users_in_memory
+            provider: app_user_provider
 
+            form-login:
+                login-path: app_login                   # set route for showing login form
+                check-path: app_login                   # set route for processing the login form 
+                default_target_path: homepage
+            logout:                                     # no need to create a controller for this route!
+                path: app_logout
+                target: homepage
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
 
@@ -24,6 +35,13 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/login, roles: PUBLIC_ACCESS } 
+        - { path: ^/gallery, roles: PUBLIC_ACCESS } 
+        - { path: ^/search, roles: PUBLIC_ACCESS }
+        - { path: ^/register, roles: PUBLIC_ACCESS }
+        - { path: ^/artwork, roles: PUBLIC_ACCESS }
+        - { path: ^/admin, roles: [ROLE_ADMIN, ROLE_MOD] }
+        - { path: ^/, roles: ROLE_USER }
 
 when@test:
     security:
