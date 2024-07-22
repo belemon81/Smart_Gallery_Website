@@ -1,0 +1,29 @@
+{% extends 'gallery.html.twig' %} 
+
+{% block heading %}
+    <div class="container pp-section">
+        <div class="row">
+            <div class="col-md-9 col-sm-12 px-0"> 
+                <h1 class="h3">{{app.user.name}}'s Gallery</h1> 
+                <h6>Feel free to wander and enjoy your own Smart Gallery~</h6>
+                <br>
+                <h6>
+                    <a href="{{path('my_gallery')}}" class="btn btn-secondary active"><i class="fa fa-list" aria-hidden="true"></i>&nbsp;View my gallery</a>   
+                    <a href="{{path('manage')}}" class="btn btn-secondary"><i class="fa fa-magic" aria-hidden="true"></i>&nbsp;Manage my gallery</a> 
+                    <a href="{{path('add_artwork')}}" class="btn btn-secondary"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add new artwork</a> 
+                    <button class="btn btn-secondary" onclick="myManual()"><i class="fa fa-book" aria-hidden="true"></i>&nbsp;View manual</button>
+                </h6>
+            </div>
+        </div>
+    </div>
+    <script>
+        function myManual() {
+            alert("1. In your gallery view page, you can wander all of your artworks,\n    including ones that haven't been approved. Other artists can view\n    your approved artworks only.\n2. In your gallery manager, feel free to manage all of your artworks,\n    including \"add\", \"edit\" or \"delete\" them.");
+        }
+    </script>
+    <style>
+        .btn {
+            margin-right: 0.5rem;
+        }
+    </style>
+{% endblock %}

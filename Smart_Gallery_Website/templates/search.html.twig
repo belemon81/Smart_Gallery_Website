@@ -1,0 +1,77 @@
+{% extends 'gallery.html.twig' %}
+
+{% block container %}
+    <div class="page-content">
+        <div class="container">
+            <div class="pp-section pp-container-readable"> 
+                <div class="pp-post">
+                {{ form_start(form) }}
+                <fieldset id="fieldset">
+                <legend id="legend"><a class="h3" href="#">Search Engine</a></legend>
+                <table>
+                    {{form_errors(form) }}
+                    <tr>
+                        <th>Artwork Name</th><td>{{ form_widget(form.Name) }}</td> 
+                    </tr>
+                    <tr>
+                        <th>Artist Name</th><td>{{ form_widget(form.Artist) }}</td>
+                    </tr>
+                    <tr>
+                        <th>Artwork Categories</th>
+                        <td> 
+                            {% for category in form.Category %}
+                                <div class="box"> 
+                                    {{ form_widget(category) }}
+                                    <span>{{ category.vars.label }}</span>
+                                </div>
+                            {% endfor %}
+                            </div> 
+                        </td>
+                    </tr> 
+                    <tr>
+                        <th></th><td align="right">{{form_widget(form.save,{'attr' : { 'class' : "btn btn-primary"} }) }}</td>
+                    </tr> 
+                </table> 
+                </fieldset>  
+                {{form_end(form)}}
+            </div> 
+        </div>
+        <div class="pp-section"></div>
+    </div> 
+    <style>  
+        #fieldset {
+            border: dashed black 2px; 
+            border-radius: 5px;
+        }
+        #legend {
+            width: auto;
+            margin-left: 2rem;
+        }
+        table {
+            margin: auto;
+            width: 90%;
+        } 
+        th { 
+            padding: 0rem 0 1rem 0;
+            width: 30%;
+        } 
+        td {
+            padding: 0rem 0 1rem 0;
+        } 
+        #search_Name, #search_Artist {
+            width: 100%;
+            height: 1.75rem; 
+            padding: 0 0.5rem 0 0.5rem; 
+        }   
+        option {
+            height: 1.75rem; 
+        }
+        input[type='checkbox'] {
+            accent-color: black;
+        }  
+        .box {
+            display: inline-block;
+            width: 110px;
+        }
+    </style>
+{% endblock %} 

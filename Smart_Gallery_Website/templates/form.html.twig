@@ -1,0 +1,154 @@
+{% extends 'gallery.html.twig' %}
+
+{% block heading %}
+    <div class="container pp-section">
+        <div class="row"> 
+            <div class="col-md-9 col-sm-12 px-0">
+                <h1 class="h3">{{app.user.name}}'s Manager</h1> 
+                <h6>We provide structural functions to manage your gallery.</h6>
+                <br>
+                <h6>
+                    <a href="{{path('my_gallery')}}" class="btn btn-secondary"><i class="fa fa-list" aria-hidden="true"></i>&nbsp;View my gallery</a>   
+                    <a href="{{path('manage')}}" class="btn btn-secondary {% if state == 'edit' %}active"{% endif %}><i class="fa fa-magic" aria-hidden="true"></i>&nbsp;Manage my gallery</a> 
+                    <a href="{{path('add_artwork')}}" class="btn btn-secondary {% if state == 'add' %}active{% endif %}"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add new artwork</a> 
+                    <button class="btn btn-secondary" onclick="myManual()"><i class="fa fa-book" aria-hidden="true"></i>&nbsp;View manual</button>
+                </h6>
+            </div>
+        </div>  
+    </div>
+{% endblock %}
+
+{% block display %}
+    <div class="page-content">
+        <div class="container">
+            <div class="pp-section pp-container-readable my-style">
+                <div class="pp-post"> 
+                {{ form_start(form) }} 
+                <table>
+                    <tr>
+                        <th>Artwork's Name:</th><td>{{ form_widget(form.Name) }}</td>
+                    </tr> 
+                    <tr>
+                        <th>Completion Date:</th><td>{{ form_widget(form.CompletionDate) }}</td>
+                    </tr>
+                    <tr>
+                        <th>Category:</th>
+                        <td> 
+                            {% for category in form.Category %}
+                                <div class="box"> 
+                                    {{ form_widget(category) }}
+                                    <span>{{ category.vars.label }}</span>
+                                </div>
+                            {% endfor %}
+                            </div> 
+                        </td>
+                    </tr>
+                    {% if form_errors(form.Category) %} 
+                        <tr class="error">
+                            <th></th><td>{{ form_errors(form.Category) }}</td>
+                        </tr>
+                    {% endif %}
+                    <tr>
+                        <th>Artwork File:</th>
+                        <td>
+                            {% if artwork.getArtworkFilePath %}
+                                <img src="{{artwork.getArtworkFilePath()}}" alt="{{artwork.getName()}}" width="50px" height="auto">
+                            {% endif %}
+                            {{ form_widget(form.ArtworkFile) }}
+                            
+                        </td>
+                    </tr>
+                    {% if form_errors(form.ArtworkFile) %} 
+                        <tr class="error">
+                            <th></th><td>{{ form_errors(form.ArtworkFile) }}</td>
+                        </tr>
+                    {% endif %}
+                    <tr>
+                        <th>Artwork URL:</th><td>{{ form_widget(form.ArtworkURL) }}</td>
+                    </tr>
+                    {% if form_errors(form.ArtworkURL) %} 
+                        <tr class="error">
+                            <th></th><td>{{ form_errors(form.ArtworkURL) }}</td>
+                        </tr>
+                    {% endif %}
+                    <tr>
+                    <td colspan="2">{{ form_widget(form.Description) }}</td>
+                    </tr>
+                    {% if form_errors(form.Description) %} 
+                        <tr class="error">
+                            <th></th><td>{{ form_errors(form.Description) }}</td>
+                        </tr>
+                    {% endif %}
+                    <tr>
+                        <th></th><td align="right">{{form_widget(form.save, {'label': label, 'attr': {'class':'btn btn-primary'} })}}</td>
+                    </tr>  
+                </table> 
+                {{form_end(form)}}
+                </div>
+            </div>
+        </div>
+    </div> 
+
+    <script src="https://cdn.ckeditor.com/ckeditor5/35.3.0/classic/ckeditor.js"></script>
+    <script>
+        let editor;
+        ClassicEditor
+            .create(document.querySelector('#{{form.Description.vars.id}}'),
+            {
+                updateSourceElementOnDestroy: true,
+            })
+            .then(newEditor => {editor = newEditor;}) 
+            .catch(error => {console.error(error);}); 
+        document.querySelector('#{{form.save.vars.id}}').addEventListener( 'click', () => {
+            document.querySelector('#{{form.Description.vars.id}}').value = editor.getData();
+        }); 
+
+        function myManual() {
+            alert('Keep your creativity~ ❤')
+        }
+    </script>
+    <style>
+        .ck-editor__editable_inline {
+            height: 400px;
+        }
+        .my-style {
+            max-width: 1000px;
+        }
+        input[type='checkbox'] {
+            accent-color: black;
+        }  
+        .box {
+            display: inline-block;
+            width: 110px;
+        }
+        th { 
+            padding: 0rem 0 1rem 0;
+            width: 20%;
+        } 
+        td {
+            padding: 0rem 0 1rem 0;
+        } 
+        #manage_Name,#manage_Artist, #manage_ArtworkURL{
+            width: 100%;
+            height: 1.75rem; 
+            padding: 0 0.5rem 0 0.5rem; 
+        } 
+        #manage_ArtworkFile {
+            padding: 0 0.5rem 0 0.5rem; 
+            height: 2rem;
+            width: 50%; 
+        }
+        .btn {
+            margin-right: 0.5rem;
+        }
+        .error {
+            color: red;  
+        } 
+        ul, li {
+            list-style: none;
+            padding: 0;
+        }
+    </style>
+{% endblock %}
+
+
