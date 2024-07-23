@@ -9,7 +9,8 @@ volumes:
 
 services:
   app-gallery:
-    build: ./Smart_Gallery_Website
+    image: belemon81/internship:smart-gallery
+    # build: ./Smart_Gallery_Website
     ports:
       - "8000:8000"
     networks:
