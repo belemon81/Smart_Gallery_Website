@@ -26,17 +26,21 @@ class ArtworkCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [ 
-            TextField::new('name'),
-            AssociationField::new('Artist'),
-            DateField::new('completionDate')->setEmptyData((new DateTime('now', new DateTimeZone('Asia/Ho_Chi_Minh')))->format('Y-m-d')),
-            AssociationField::new('Category'),
-            TextEditorField::new('description')->setEmptyData("<em>The artist left nothing...</em>"),
-            UrlField::new('artworkUrl'),
+            TextField::new('name')->setColumns(9),
+            AssociationField::new('Artist')->setColumns(9),
+            DateField::new('completionDate')->setEmptyData((new DateTime('now', new DateTimeZone('Asia/Ho_Chi_Minh')))
+                                            ->format('Y-m-d')),
+            AssociationField::new('Category')->setColumns(9),
+            TextEditorField::new('description')->setEmptyData("<em>The artist left nothing...</em>")
+                                               ->onlyOnForms()
+                                               ->setColumns(9),
+            UrlField::new('artworkUrl')->setColumns(9),
             ImageField::new('artworkFile')->setBasePath('uploads/artworks')
                                           ->setUploadDir('public/uploads/artworks')
-                                          ->setUploadedFileNamePattern('[slug]-[timestamp].[extension]'),
+                                          ->setUploadedFileNamePattern('[slug]-[timestamp].[extension]')
+                                          ->setColumns(9),
             BooleanField::new('approved'),
-            NumberField::new('totalViews')->onlyOnIndex(),
+            NumberField::new('totalViews')->setColumns(9),
         ];
     } 
 }

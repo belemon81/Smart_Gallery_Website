@@ -41,7 +41,7 @@ class AdminController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('<a href="gallery" style="padding-top:0;">
+            ->setTitle('<a href="gallery" style="padding-top:0;margin-top:0;">
                             <img src="/images/favicon.png" alt="Logo" style="width:30px;height:auto;padding:0;"
                             >&nbsp;&nbsp;SMART GALLERY
                         </a>')

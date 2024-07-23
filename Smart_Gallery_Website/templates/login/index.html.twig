@@ -7,9 +7,9 @@
 {% endblock %}
 
 {% block container %} 
-    <div class="page-content">
+    <div class="page-content py-5">
         <div class="container">
-            <div class="pp-section pp-container-readable">
+            <div class="pp-container-readable">
                 <div class="pp-post"> 
                 <form action="{{path('app_login')}}" method="post">
                     <fieldset id="fieldset">
@@ -45,13 +45,12 @@
                 </form> 
                 </div>
             </div>
-        </div>
-        <div class="pp-section"></div>
+        </div> 
     </div> 
     <style>  
         #fieldset {
-            border: dashed black 2px; 
-            border-radius: 2px;
+            border: dashed black 1px; 
+            border-radius: 5px;
         }
         #legend {
             width: auto;

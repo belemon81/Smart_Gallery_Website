@@ -32,10 +32,10 @@ class Comment
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $CommentTime = null;
 
-    public function __construct()
-    {
-        $this->Replies = new ArrayCollection();
-    }
+    // public function __construct()
+    // {
+    //     $this->Replies = new ArrayCollection();
+    // }
 
     public function getId(): ?int
     {

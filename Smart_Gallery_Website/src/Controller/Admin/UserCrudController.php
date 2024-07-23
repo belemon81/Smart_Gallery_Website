@@ -20,10 +20,11 @@ class UserCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            TextField::new('name'),
-            TextField::new('username')->onlyOnIndex(),
-            TextField::new('email')->onlyOnIndex(), 
-            ChoiceField::new('roles')->allowMultipleChoices()
+            TextField::new('name')->setColumns(9),
+            TextField::new('username')->setColumns(9),
+            TextField::new('email')->setColumns(9), 
+            ChoiceField::new('roles')->setColumns(9)
+                                    ->allowMultipleChoices()
                                     ->autocomplete()
                                     ->setChoices([
                                         'Admin' => 'ROLE_ADMIN', 
@@ -38,7 +39,7 @@ class UserCrudController extends AbstractCrudController
     {
         return $actions 
             ->remove(Crud::PAGE_INDEX, Action::NEW)
-            // ->remove(Crud::PAGE_DETAIL, Action::EDIT)
+            ->remove(Crud::PAGE_DETAIL, Action::EDIT)
         ;
     }
 }

@@ -27,7 +27,7 @@ class LikeCrudController extends AbstractCrudController
     public function configureActions(Actions $actions): Actions
     {
         return $actions 
-            ->remove(Crud::PAGE_INDEX, Action::NEW)
+            // ->remove(Crud::PAGE_INDEX, Action::NEW)
             ->remove(Crud::PAGE_INDEX, Action::EDIT)
         ;
     }

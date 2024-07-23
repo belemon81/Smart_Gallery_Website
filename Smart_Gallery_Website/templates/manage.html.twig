@@ -4,12 +4,17 @@
     <div class="container pp-section">
         <div class="row">
             <div class="col-md-9 col-sm-12 px-0">
+            {% if artworks %}
                 <h1 class="h3">{{app.user.name}}'s Manager</h1> 
                 <h6>We provide structural functions to manage your gallery.</h6>
+            {% else %}  
+                <h1 class="h3">{{app.user.name}}'s Manager</h1>
+                <h6>You haven't upload any artwork in your gallery... <a href='artwork/add'>Wanna try it?</a></h6>
+            {% endif %}
                 <br>
                 <h6>
                     <a href="{{path('my_gallery')}}" class="btn btn-secondary"><i class="fa fa-list" aria-hidden="true"></i>&nbsp;View my gallery</a>   
-                    <a href="{{path('manage')}}" class="btn btn-secondary active"><i class="fa fa-magic" aria-hidden="true"></i>&nbsp;Manage my gallery</a> 
+                    <a href="{{path('manage',  {'id': 1})}}" class="btn btn-secondary active"><i class="fa fa-magic" aria-hidden="true"></i>&nbsp;Manage my gallery</a> 
                     <a href="{{path('add_artwork')}}" class="btn btn-secondary"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add new artwork</a> 
                     <button class="btn btn-secondary" onclick="myManual()"><i class="fa fa-book" aria-hidden="true"></i>&nbsp;View manual</button>
                 </h6>
@@ -21,35 +26,30 @@
 {% block display %}
     <br>
     <div class="container px-0">
-        <div class="pp-gallery" id="align"> 
+        <div class="pp-gallery pt-0" id="align"> 
             {% if artworks %}
                 <table class="center">  
-                    <tr>
-                        <th>Order</th>
-                        <th>Artwork Name</th>
+                    <tr> 
+                        <th class="col-2 p-0">Artwork Name</th>
                         <th>Completion Date</th>
-                        <th>Views</th> 
-                        <th>Likes</th> 
-                        <th>Comments</th> 
-                        <th>State</th> 
+                        <th><i class="fa fa-eye" aria-hidden="true"></i> Views</th> 
+                        <th><i class="fa fa-thumbs-up" aria-hidden="true"></i> Likes</th> 
+                        <th><i class="fa fa-comments" aria-hidden="true"></i> Comments</th> 
+                        <th>Approved</th> 
                         <th>Preview</th>
-                        <th>Actions</th>
-                    </tr> 
-                    {% set count = id*10 %}
-                    {% for i in (id*10)..((id*10)+9) %}
-                        {% if i in (0..(artworks|length - 1)) %}  
-                            {% set count = count + 1 %}
-                            <tr>
-                                <td>{{count}}</td>
-                                <td><a href="{{path('artwork',{id:artworks[i].getId()})}}">{{artworks[i].getName()}}<a></td>
+                        <th class="col-2">Actions</th>
+                    </tr>  
+                    {% for i in (0..(artworks|length - 1)) %}   
+                            <tr> 
+                                <td><a class="font-weight-bold" href="{{path('artwork',{id:artworks[i].getId()})}}">{{artworks[i].getName()}}<a></td>
                                 <td>{{artworks[i].getCompletionDate()|date('M d, Y')}}</td>
                                 <td>{{artworks[i].getTotalViews()}}</td>
                                 <td>{{artworks[i].getLikes()|length}}</td>
                                 <td>{{artworks[i].getComments()|length}}</td>
                                 {% if artworks[i].isApproved()%}
-                                    <td style="color:#1BA710;">Published</td>
+                                    <td style="color:#1BA710;"><i class="fa fa-check-square" aria-hidden="true"></i></td>
                                 {% else %}
-                                    <td style="color:#FFCC00;">Approving</td>
+                                    <td style="color:#FFCC00;"><i class="fa fa-paper-plane" aria-hidden="true"></i></i></td>
                                 {% endif %}
                                 {% if artworks[i].getArtworkFilePath() %}
                                     <td style="color:red;" class="img"><img src="{{artworks[i].getArtworkFilePath()}}" alt="Error"/></td>
@@ -59,29 +59,38 @@
                                     <td style="color:red;">Error</td>
                                 {% endif %}
                                 <td> 
-                                    <a href="{{path('edit_artwork',{id:artworks[i].getId()})}}"><button class="btn btn-secondary same">Edit</button></a>
-                                    <button class="btn btn-secondary same" onclick='function accept(){if (confirm("Are you sure want to delete the artwork \"{{ artworks[i].getName() }}\"?") === true) {window.location.replace("{{ path( "delete_artwork",{id:artworks[i].getId(),page:id} ) }}");}};accept()'>Delete</button>
+                                    <a href="{{path('edit_artwork',{id:artworks[i].getId()})}}"><button class="btn btn-info"><i class="fa fa-paint-brush" aria-hidden="true"></i>
+                                Edit</button></a>
+                                    <button class="btn btn-danger" onclick='function accept(){if (confirm("Are you sure want to delete the artwork \"{{ artworks[i].getName() }}\"?") === true) {window.location.replace("{{ path( "delete_artwork",{id:artworks[i].getId(),page:id} ) }}");}};accept()'><i class="fa fa-trash" aria-hidden="true"></i> Del</button>
                                 </td>
-                            </tr>
-                        {% endif %}
+                            </tr> 
                     {% endfor %} 
                 <br><br>
-                </table>
-                {% if (id*10 + 9 < artworks|length - 1) %}
-                    <div>
-                        <a class="btn btn-primary float-right" href="{{ path('manage',{id:id+1}) }}">
-                            Next Page &rarr;              
-                        </a>
-                    </div>
-                {% endif %}
-                {% if (id*10 - 9 > 0) %}
-                    <div>
-                        <a class="btn btn-primary float-left" href="{{ path('manage',{id:id-1}) }}">
-                            &larr; Previous Page            
-                        </a>
-                    </div>
-                {% endif %} 
-        {% endif %}
+                </table>  
+                                            <div class="text-center pt-5">
+                                                <a class="btn {% if id == 0 %}btn-primary disabled
+                                                {% else %}btn-outline-primary{% endif %} mx-1" href="/{{ current }}/manage/{{ id }}">
+                                                    ◀ First
+                                                </a>
+                                                {% if (id > 0) %}
+                                                    <a class="btn btn-outline-primary mx-1" href='/{{ current }}/manage/{{ id }}'>
+                                                        {{ id }}
+                                                    </a>
+                                                {% endif %}
+                                                <button class="btn btn-primary mx-1">
+                                                    {{ id+1 }}
+                                                </button>
+                                                {% if (artworks|length) == 20 %}
+                                                    <a class="btn btn-outline-primary mx-1" href='/{{ current }}/manage/{{ id+2 }}'>
+                                                        {{ id+2 }}
+                                                    </a>
+                                                {% endif %}
+                                                <a class="btn {% if (artworks|length) < 21 %}btn-primary disabled
+                                                {% else %}btn-outline-primary{% endif %} mx-1" href="/{{ current }}/manage/{{ id+2 }}">
+                                                    Next ▶
+                                                </a>
+                                            </div> 
+            {% endif %}  
         </div>
         <div class="pp-section"></div>
     </div> 
@@ -98,20 +107,28 @@
             width: 5rem; 
         }
         .btn {
-            margin: 5px 0.5rem 5px 0;
+            margin: 0 0.5rem 5px 0;
         }
         .my-style {
             max-width: 1000px;
         }
         .name {
             font-weight: 600;
+        } 
+        th {
+        background: #ddd
         }
-        table, td, th { 
-            border-collapse: collapse;
-            border: 2px #6F4E37 solid;
+        table {
+        border-radius: 5px
+        }
+        table, td, th {  
+            border: 2px black solid;
             padding: 10px;
             text-align: center;
         }  
+        tr:hover {
+        background: #efefef
+        }
         img {
             width: 8rem;
             height: auto;
