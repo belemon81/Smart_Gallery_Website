@@ -6,27 +6,46 @@ networks:
 
 volumes:
   db-data:
+  gallery-uploads:
 
 services:
   app-gallery:
+    # build:
+    #   context: ./Smart_Gallery_Website
+    #   dockerfile: Dockerfile
     image: belemon81/internship:smart-gallery
-    # build: ./Smart_Gallery_Website
     ports:
       - "8000:8000"
     networks:
       - app-network
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+    environment:
+      APP_ENV: prod
+      APP_DEBUG: "0"
+      APP_SECRET: "81adb4b12643b84efccbee6ecf3e0134"
+      DATABASE_URL: "mysql://root:root@db:3306/gallery?serverVersion=8.0.32&charset=utf8mb4"
+      MESSENGER_TRANSPORT_DSN: "doctrine://default?auto_setup=0"
+    volumes:
+      - gallery-uploads:/app/public/uploads/artworks
+    restart: unless-stopped
 
   db:
-    image: mysql:8.0.32  
+    image: mysql:8.0.32
     ports:
       - "3307:3306"
     restart: always
     environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=gallery
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: gallery
     networks:
       - app-network
     volumes:
-      - ./db-data:/var/lib/mysql 
+      - db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 30s

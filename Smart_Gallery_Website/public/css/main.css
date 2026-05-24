@@ -458,3 +458,80 @@ body {
 .pp-section {
   padding-top: 6rem;
 }
+
+/* Mobile-only adjustments (desktop layout unchanged) */
+@media (max-width: 767.98px) {
+  .pp-category-filter .btn {
+    margin: 0 6px 8px 0;
+    font-size: 12px;
+    padding: 0.35rem 0.6rem;
+  }
+
+  .pp-gallery .text-center .btn {
+    margin: 0.25rem;
+    font-size: 13px;
+    padding: 0.35rem 0.55rem;
+  }
+
+  .pp-container-readable.my-style,
+  .my-style.pp-container-readable {
+    max-width: 100% !important;
+    width: 100% !important;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  .pp-comments .media .absolute,
+  .pp-post-meta .absolute {
+    position: static !important;
+    display: block;
+    margin-top: 0.75rem;
+    width: 100%;
+  }
+
+  .manage-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 0 -0.5rem;
+    padding: 0 0.5rem;
+  }
+
+  .manage-table-wrap table {
+    min-width: 720px;
+  }
+
+  .manage-actions .btn {
+    display: block;
+    width: 100%;
+    margin: 0 0 0.5rem 0;
+  }
+
+  .auth-form table,
+  .auth-form th,
+  .auth-form td {
+    display: block;
+    width: 100%;
+  }
+  .auth-form table {
+    width: 90%
+  }
+
+  .auth-form th {
+    padding-bottom: 0.25rem;
+  }
+
+  .auth-form td {
+    padding-bottom: 0.75rem;
+  }
+
+  .auth-form td[align="right"] {
+    text-align: left !important;
+  }
+
+  .gallery-user-actions .btn,
+  .gallery-manage-actions .btn {
+    display: block;
+    width: 100%;
+    margin: 0 0 0.5rem 0;
+  }
+}

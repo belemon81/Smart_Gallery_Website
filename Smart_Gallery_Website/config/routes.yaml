@@ -2,6 +2,10 @@ controllers:
     resource: ../src/Controller/
     type: attribute
 
+gallery_controllers:
+    resource: ../src/Controller/GalleryController.php
+    type: annotation
+
 app_logout:
     path: /logout
     methods: GET

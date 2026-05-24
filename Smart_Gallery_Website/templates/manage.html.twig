@@ -12,7 +12,7 @@
                 <h6>You haven't upload any artwork in your gallery... <a href='artwork/add'>Wanna try it?</a></h6>
             {% endif %}
                 <br>
-                <h6>
+                <h6 class="gallery-manage-actions">
                     <a href="{{path('my_gallery')}}" class="btn btn-secondary"><i class="fa fa-list" aria-hidden="true"></i>&nbsp;View my gallery</a>   
                     <a href="{{path('manage',  {'id': 1})}}" class="btn btn-secondary active"><i class="fa fa-magic" aria-hidden="true"></i>&nbsp;Manage my gallery</a> 
                     <a href="{{path('add_artwork')}}" class="btn btn-secondary"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add new artwork</a> 
@@ -28,6 +28,7 @@
     <div class="container px-0">
         <div class="pp-gallery pt-0" id="align"> 
             {% if artworks %}
+                <div class="manage-table-wrap">
                 <table class="center">  
                     <tr> 
                         <th class="col-2 p-0">Artwork Name</th>
@@ -58,7 +59,7 @@
                                 {% else %}
                                     <td style="color:red;">Error</td>
                                 {% endif %}
-                                <td> 
+                                <td class="manage-actions"> 
                                     <a href="{{path('edit_artwork',{id:artworks[i].getId()})}}"><button class="btn btn-info"><i class="fa fa-paint-brush" aria-hidden="true"></i>
                                 Edit</button></a>
                                     <button class="btn btn-danger" onclick='function accept(){if (confirm("Are you sure want to delete the artwork \"{{ artworks[i].getName() }}\"?") === true) {window.location.replace("{{ path( "delete_artwork",{id:artworks[i].getId(),page:id} ) }}");}};accept()'><i class="fa fa-trash" aria-hidden="true"></i> Del</button>
@@ -66,7 +67,8 @@
                             </tr> 
                     {% endfor %} 
                 <br><br>
-                </table>  
+                </table>
+                </div>
                                             <div class="text-center pt-5">
                                                 <a class="btn {% if id == 0 %}btn-primary disabled
                                                 {% else %}btn-outline-primary{% endif %} mx-1" href="/{{ current }}/manage/{{ id }}">

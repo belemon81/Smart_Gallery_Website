@@ -1,0 +1,13 @@
+.git
+.gitignore
+var/cache/*
+var/log/*
+!var/cache/.gitkeep
+!var/log/.gitkeep
+.env.local
+.env.*.local
+tests/
+phpunit.xml.dist
+.idea/
+.vscode/
+node_modules/

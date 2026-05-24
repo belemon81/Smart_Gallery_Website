@@ -46,7 +46,7 @@ class Artwork
     #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'Artworks')]
     private Collection $Category;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(name: 'artwork_file', length: 255, nullable: true)]
     // #[Assert\Image]
     private ?string $ArtworkFile = null;
 

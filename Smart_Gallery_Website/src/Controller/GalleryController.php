@@ -95,7 +95,8 @@ class GalleryController extends AbstractController
     }
 
     /**
-     * @Route("/gallery/{id<\d+>?1}",  name="homepage")
+     * @Route("/", name="homepage", defaults={"id": 1})
+     * @Route("/gallery/{id<\d+>?1}", name="gallery_page")
      */
     public function showAllArtworksByCategory(Request $request, ManagerRegistry $doctrine, int $id): Response
     {

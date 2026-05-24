@@ -11,7 +11,7 @@
         <div class="container">
             <div class="pp-container-readable">
                 <div class="pp-post"> 
-                <form action="{{path('app_login')}}" method="post">
+                <form class="auth-form" action="{{path('app_login')}}" method="post">
                     <fieldset id="fieldset">
                     <legend id="legend"><a class="h3" href="#">Login Form</a></legend>
                     <dl>
@@ -71,6 +71,7 @@
             width: 100%;
             height: 1.75rem; 
             padding: 0 0.5rem 0 0.5rem; 
+            border: 1px solid #ccc
         }
         .error {
             color: red; 

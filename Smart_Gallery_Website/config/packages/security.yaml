@@ -18,9 +18,10 @@ security:
             provider: app_user_provider
 
             form-login:
-                login-path: app_login                   # set route for showing login form
-                check-path: app_login                   # set route for processing the login form 
+                login_path: /login
+                check_path: /login
                 default_target_path: homepage
+                enable_csrf: false
             logout:                                     # no need to create a controller for this route!
                 path: app_logout
                 target: homepage
@@ -33,15 +34,16 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
-        - { path: ^/login, roles: PUBLIC_ACCESS } 
-        - { path: ^/gallery, roles: PUBLIC_ACCESS } 
-        - { path: ^/search, roles: PUBLIC_ACCESS }
+        - { path: ^/login, roles: PUBLIC_ACCESS }
         - { path: ^/register, roles: PUBLIC_ACCESS }
+        - { path: ^/gallery, roles: PUBLIC_ACCESS }
+        - { path: ^/search, roles: PUBLIC_ACCESS }
         - { path: ^/artwork, roles: PUBLIC_ACCESS }
+        - { path: ^/$, roles: PUBLIC_ACCESS }
         - { path: ^/admin, roles: [ROLE_ADMIN, ROLE_MOD] }
-        - { path: ^/, roles: ROLE_USER }
+        - { path: ^/my_gallery, roles: ROLE_USER }
+        - { path: ^/like, roles: ROLE_USER }
+        - { path: ^/unlike, roles: ROLE_USER }
 
 when@test:
     security:
